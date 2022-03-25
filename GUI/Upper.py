@@ -1,7 +1,4 @@
 import tkinter as tk
-from turtle import back, width
-
-from matplotlib.pyplot import fill
 import globals
 
 class Upper(tk.Frame):
@@ -14,13 +11,7 @@ class Upper(tk.Frame):
             self.label = tk.Label(self, text='Riemann Sum Visualization', foreground=globals.ACCENT_COLOR, background=globals.FRAME_COLOR)
             self.label.pack(fill=tk.BOTH, expand=True)
             self.label.config(font=('Helvatical bold', 30))
-
-
-            self.grid_rowconfigure(1, weight=1)
-            self.grid_rowconfigure(2, weight=1)
-            self.grid_propagate(False)
-
-            # self.add_widgets()
+            
 
         def add_widgets(self):
             # Creating a frame to contain the label and input of the function

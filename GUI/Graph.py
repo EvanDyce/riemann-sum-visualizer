@@ -5,7 +5,7 @@ import globals
 
 class Graph(tk.Frame):
     def __init__(self, parent):
-        super().__init__(master=parent, background=globals.ACCENT_COLOR, width=globals.WIDTH, height=(globals.HEIGHT/6)*4)
+        super().__init__(master=parent, background=globals.ACCENT_COLOR, width=globals.WIDTH, height=(globals.HEIGHT/12)*8)
         self.parent = parent
         self.grid(row=2, rowspan=4, column=0)
         self.pack_propagate(False)

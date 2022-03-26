@@ -1,13 +1,9 @@
-from cProfile import label
-from turtle import width
-from matplotlib.pyplot import text
-from numpy import result_type
-from pyparsing import col
+from GUI.Graph import Graph
 import globals
 import tkinter as tk
 
 class Lower(tk.Frame):
-        def __init__(self, parent):
+        def __init__(self, parent, graph):
             super().__init__(parent, bg=globals.FRAME_COLOR, width=globals.WIDTH, height=globals.HEIGHT/12*3)
             self.parent = parent
             self.grid(row=6, rowspan=1, column=0)
@@ -16,6 +12,7 @@ class Lower(tk.Frame):
             self.grid_columnconfigure(1, weight=1)
             self.grid_columnconfigure(2, weight=1)
 
+            self.graph = graph
             self.add_widgets()
 
 
@@ -24,16 +21,21 @@ class Lower(tk.Frame):
             self.riemann_frame_create().grid(row=0, column=1)
             self.result_frame_create().grid(row=0, column=2)
 
+        def func_changed(self, name, index, mode):
+            print('changed')
+            func = self.getvar(name)
+            self.graph.clear(func)
+
 
         def functions_frame_create(self):
             functions = ['Linear',
                                 'Quadratic',
-                                'Trinomial',
+                                'Cubic',
                                 'Exponential',
                                 'Logarithmic',
-                                'sin', 
-                                'cos',
-                                'tan']
+                                'Sin', 
+                                'Cos',
+                                'Tan']
 
             functions_frame = tk.Frame(self, background=globals.FRAME_COLOR, width=globals.WIDTH/3, height=globals.HEIGHT/12*3)
             functions_frame.grid_columnconfigure(0, weight=1)
@@ -41,16 +43,16 @@ class Lower(tk.Frame):
             functions_frame.grid_rowconfigure(1, weight=1)
             functions_frame.grid_propagate(False)
 
-            function_stringvar = tk.StringVar(functions_frame, 'Linear')
+            function_stringvar = tk.StringVar(functions_frame, 'Linear', name='function')
             dropdown = tk.OptionMenu(functions_frame, function_stringvar, *functions)
             dropdown.grid(row=0, column=0, sticky='nsew', padx=100, pady=50)
             dropdown.config(font=('Helvetica bold', 20), activeforeground=globals.ACCENT_COLOR)
+            function_stringvar.trace('w', self.func_changed)
 
-            button = tk.Button(functions_frame, activebackground=globals.ACCENT_COLOR, text='Plot Function')
-            button.grid(row=1, column=0, sticky='nsew', padx=120, pady=25)
+            # button = tk.Button(functions_frame, activebackground=globals.ACCENT_COLOR, text='Plot Function')
+            # button.grid(row=1, column=0, sticky='nsew', padx=120, pady=25)
 
             return functions_frame
-
 
         def riemann_frame_create(self):
             riemanns = ['Right', 

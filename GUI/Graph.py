@@ -1,28 +1,59 @@
 import tkinter as tk
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
+from matplotlib.pyplot import plot_date
+from functions import Functions
 import globals
 
+
 class Graph(tk.Frame):
+ 
     def __init__(self, parent):
         super().__init__(master=parent, background=globals.ACCENT_COLOR, width=globals.WIDTH, height=(globals.HEIGHT/12)*8)
         self.parent = parent
         self.grid(row=2, rowspan=4, column=0)
         self.pack_propagate(False)
-        
-        self.plot()
 
-    def plot(self):
-        fig = Figure(dpi=100)
-        y = [i**2 for i in range(101)]
-        plot1 = fig.add_subplot(111)
-        plot1.plot(y)
+        self.canvas = None
+        self.fig = None
+        self.plot('Linear')
 
-        canvas = FigureCanvasTkAgg(fig, master=self)
-        canvas.draw()
+    def clear(self, name):
+        print('cleared')
+        self.fig.clear(True)
+        for item in self.winfo_children():
+            item.destroy()
+        # self.fig = Figure(dpi=100)
+        self.plot(name)
+
+
+    def plot(self, function):
+        func_dict = {
+            'Linear': Functions.Linear,
+            'Quadratic': Functions.Quadratic, 
+            'Cubic': Functions.Cubic,
+            'Exponential': Functions.Exponential,
+            'Logarithmic': Functions.Logarithm,
+            'Sin': Functions.Sin,
+            'Cos': Functions.Cos,
+            'Tan': Functions.Tan
+        }
+
+        fig = func_dict[function]()
+        self.fig = fig
+        self.canvas = FigureCanvasTkAgg(fig, master=self)
+        self.canvas.draw()
+        self.canvas.get_tk_widget().pack(fill=tk.BOTH, expand=tk.YES, padx=50)
+
+        # self.fig.clear()
+        # y = [i**2 for i in range(101)]
+        # plot1 = self.fig.add_subplot(111)
+        # plot1.plot(y)
+        # self.fig = Functions.Sin()
+
+        # # create functions that will create the proper figures
+        # canvas = FigureCanvasTkAgg(self.fig, master=self)
+        # canvas.draw()
+    
    
-        canvas.get_tk_widget().pack(fill=tk.BOTH, expand=tk.YES, padx=50)
-
-        # toolbar = NavigationToolbar2Tk(canvas, self)
-        # toolbar.update()
-        # toolbar.get_tk_widget().grid()
+        # canvas.get_tk_widget().pack(fill=tk.BOTH, expand=tk.YES, padx=50)

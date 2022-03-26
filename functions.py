@@ -18,48 +18,48 @@ class Functions():
 
     @staticmethod
     def Linear():
-        x = np.linspace(-10, 10, 200)
+        x = np.linspace(-5, 5, 200)
         y = x
-        return Functions.generate(x, y, (-10, 10))
+        return Functions.generate(x, y, (-5, 5))
 
     @staticmethod
     def Quadratic():
-        x = np.linspace(-10, 10, 200)
+        x = np.linspace(-5, 5, 200)
         y = x**2
-        return Functions.generate(x, y, (-10, 10))
+        return Functions.generate(x, y, (-5, 5))
 
     @staticmethod
     def Cubic():
-        x = np.linspace(-10, 10, 200)
+        x = np.linspace(-5, 5, 200)
         y = x**3
-        return Functions.generate(x, y, (-10, 10))
+        return Functions.generate(x, y, (-5, 5))
 
     @staticmethod
     def Exponential():
-        x = np.linspace(-1, 10, 200)
+        x = np.linspace(-1, 5, 200)
         y = 2**x
-        return Functions.generate(x, y, (-1, 10))
+        return Functions.generate(x, y, (-1, 5))
 
     @staticmethod
     def Logarithm():
-        x = np.linspace(0.001, 15, 200)
+        x = np.linspace(0.001, 5, 200)
         y = [log(num) for num in x]
-        return Functions.generate(x, y, (0, 15))
+        return Functions.generate(x, y, (0, 5))
 
     @staticmethod
     def Sin():
-        x = np.linspace(-10, 10, 200)
+        x = np.linspace(-5, 5, 200)
         y = [sin(num) for num in x]
-        return Functions.generate(x, y, (-10, 10))
+        return Functions.generate(x, y, (-5, 5))
 
     @staticmethod
     def Cos():
-        x = np.linspace(-10, 10, 200)
+        x = np.linspace(-5, 5, 200)
         y = [cos(num) for num in x]
-        return Functions.generate(x, y, (-10, 10))
+        return Functions.generate(x, y, (-5, 5))
 
     @staticmethod
     def Tan():
-        x = np.linspace(-10, 10, 200)
+        x = np.linspace(-5, 5, 200)
         y = [tan(num) for num in x]
-        return Functions.generate(x, y, (-10, 10))
+        return Functions.generate(x, y, (-5, 5))

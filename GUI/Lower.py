@@ -49,9 +49,6 @@ class Lower(tk.Frame):
             dropdown.config(font=('Helvetica bold', 20), activeforeground=globals.ACCENT_COLOR)
             function_stringvar.trace('w', self.func_changed)
 
-            # button = tk.Button(functions_frame, activebackground=globals.ACCENT_COLOR, text='Plot Function')
-            # button.grid(row=1, column=0, sticky='nsew', padx=120, pady=25)
-
             return functions_frame
 
         def riemann_frame_create(self):

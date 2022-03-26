@@ -12,7 +12,7 @@ class app(tk.Tk):
         self.geometry(f'{globals.WIDTH}x{globals.HEIGHT}')
         self.upper = Upper.Upper(self)
         self.graph = Graph.Graph(self)
-        self.lower = Lower.Lower(self)
+        self.lower = Lower.Lower(self, graph=self.graph)
         
 
 if __name__ == "__main__":

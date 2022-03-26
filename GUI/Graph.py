@@ -23,7 +23,7 @@ class Graph(tk.Frame):
         self.fig.clear(True)
         for item in self.winfo_children():
             item.destroy()
-        # self.fig = Figure(dpi=100)
+
         self.plot(name)
 
 
@@ -44,16 +44,3 @@ class Graph(tk.Frame):
         self.canvas = FigureCanvasTkAgg(fig, master=self)
         self.canvas.draw()
         self.canvas.get_tk_widget().pack(fill=tk.BOTH, expand=tk.YES, padx=50)
-
-        # self.fig.clear()
-        # y = [i**2 for i in range(101)]
-        # plot1 = self.fig.add_subplot(111)
-        # plot1.plot(y)
-        # self.fig = Functions.Sin()
-
-        # # create functions that will create the proper figures
-        # canvas = FigureCanvasTkAgg(self.fig, master=self)
-        # canvas.draw()
-    
-   
-        # canvas.get_tk_widget().pack(fill=tk.BOTH, expand=tk.YES, padx=50)

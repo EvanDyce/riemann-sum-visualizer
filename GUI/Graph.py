@@ -30,23 +30,29 @@ class Graph(tk.Frame):
             'Cos': Functions.Cos,
             'Tan': Functions.Tan
         }
-        self.plot('Linear')
+        self.plot('Linear', 'Right', 5)
 
-    def clear(self, name):
+    def clear(self, name, riemann, divisions):
         self.fig.clear(True)
         for item in self.winfo_children():
             item.destroy()
 
-        self.plot(name)
+        self.plot(name, riemann, divisions)
 
 
-    def plot(self, function):
+    def plot(self, function, riemann, divisions):
         func = self.func_dict[function]()
         domain = Functions.get_domain(func)
         fig, ax = Functions.generate(x=func[0], y=func[1], domain=domain)
         self.fig = fig
 
-        self.midpoint_riemann(5, function, ax)
+        if riemann == 'Left':
+            self.left_riemann(divisions, function, ax)
+        elif riemann == 'Right':
+            self.right_riemann(divisions, function, ax)
+        else:
+            self.midpoint_riemann(divisions, function, ax)
+
         self.canvas = FigureCanvasTkAgg(fig, master=self)
         self.canvas.draw()
         self.canvas.get_tk_widget().pack(fill=tk.BOTH, expand=tk.YES, padx=50)

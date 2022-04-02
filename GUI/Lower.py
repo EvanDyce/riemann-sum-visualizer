@@ -3,7 +3,7 @@ import globals
 import tkinter as tk
 
 class Lower(tk.Frame):
-        def __init__(self, parent, graph):
+        def __init__(self, parent, graph: Graph):
             super().__init__(parent, bg=globals.FRAME_COLOR, width=globals.WIDTH, height=globals.HEIGHT/12*3)
             self.parent = parent
             self.grid(row=6, rowspan=1, column=0)
@@ -13,6 +13,9 @@ class Lower(tk.Frame):
             self.grid_columnconfigure(2, weight=1)
 
             self.graph = graph
+            self.divisions = 5
+            self.function = 'Linear'
+            self.riemann = 'Right'
             self.add_widgets()
 
 
@@ -22,9 +25,9 @@ class Lower(tk.Frame):
             self.result_frame_create().grid(row=0, column=2)
 
         def func_changed(self, name, index, mode):
-            print('changed')
             func = self.getvar(name)
-            self.graph.clear(func)
+            self.function = func
+            self.graph.clear(func, self.riemann, self.divisions)
 
 
         def functions_frame_create(self):
@@ -51,6 +54,14 @@ class Lower(tk.Frame):
 
             return functions_frame
 
+        def riemann_changed(self, name, index, mode):
+            self.riemann = self.getvar(name)
+            self.graph.clear(self.function, self.riemann, self.divisions)
+
+        def num_divisions_changed(self, name):
+            self.divisions = int(self.getvar(name='divisions'))
+            self.graph.clear(self.function, self.riemann, self.divisions)
+
         def riemann_frame_create(self):
             riemanns = ['Right', 
                                 'Left',
@@ -66,10 +77,13 @@ class Lower(tk.Frame):
             type_dropdown = tk.OptionMenu(riemann_frame, riemann_stringvar, *riemanns)
             type_dropdown.grid(row=0, column=0, sticky='nsew', padx=100, pady=50)
             type_dropdown.config(font=('Helvetica bold', 20), activeforeground=globals.ACCENT_COLOR)
+            riemann_stringvar.trace('w', self.riemann_changed)
 
-            n_slider = tk.Scale(riemann_frame, orient=tk.HORIZONTAL, label='# of subdivisions', from_=1, to=100)
+            divsions_var = tk.IntVar(self, 5, name='divisions')
+            n_slider = tk.Scale(riemann_frame, orient=tk.HORIZONTAL, label='# of subdivisions', from_=1, to=100, variable=divsions_var)
             n_slider.grid(row=1, column=0, sticky='nsew', padx=120, pady=25)
             n_slider.config(font=('Helvetica bold', 12))
+            n_slider.bind('<ButtonRelease-1>', self.num_divisions_changed)
 
             return riemann_frame
 
@@ -93,11 +107,3 @@ class Lower(tk.Frame):
             return result_frame
 
 
-        
-
-
-        def num_divisions_changed():
-            pass
-
-        def type_changed():
-            pass

@@ -1,7 +1,9 @@
 from math import cos, log, sin, tan
+from scipy.integrate import quad        
 import matplotlib.figure as plt
 from matplotlib.backends.backend_tkagg import (NavigationToolbar2Tk, FigureCanvasTkAgg)
 import numpy as np
+
 
 
 class Functions():
@@ -27,22 +29,16 @@ class Functions():
         
         return (fig, ax)
 
-    # @staticmethod
-    # def left_riemann(n, function, fig):
-    #     domain = Functions.get_domain(function)
-
-    #     x = np.linspace(domain[0], domain[1], n)
-    #     y = self.func_dict[function](x=x)[1]
-    #     x_left = x[:-1]
-    #     y_left = y[:-1]
-    #     ax = fig.add_subplot(1, 1, 1, sharex=fig.get_axes()[0], sharey=fig.get_axes()[0])
-
-    #     ax.bar(x_left,y_left,width=(domain[1]-domain[0])/n,alpha=0.2,align='edge',edgecolor='b')
-
     @staticmethod
     def Linear(x=np.linspace(-5, 5, 200)):
         y = x
         return (x, y)
+
+    @staticmethod
+    def LinearAnti(domain=(-5, 5)):
+        answer = quad(lambda x: x, domain[0], domain[1])
+        return answer[0]
+        
 
     @staticmethod
     def Quadratic(x=np.linspace(-5, 5, 200)):
@@ -50,9 +46,21 @@ class Functions():
         return (x, y)
 
     @staticmethod
+    def QuadraticAnti(domain=(-5, 5)):
+        answer = quad(lambda x: x**2, domain[0], domain[1])
+        return answer[0]
+
+
+    @staticmethod
     def Cubic(x=np.linspace(-5, 5, 200)):
         y = x**3
         return (x, y)
+
+    @staticmethod
+    def CubicAnti(domain=(-5, 5)):
+        answer = quad(lambda x: x**3, domain[0], domain[1])
+        return answer[0]
+
 
     @staticmethod
     def Exponential(x=np.linspace(-1, 5, 200)):
@@ -60,22 +68,46 @@ class Functions():
         return (x, y)
 
     @staticmethod
+    def ExponentialAnti(domain=(-1, 5)):
+        answer = quad(lambda x: 2**x, domain[0], domain[1])
+        return answer[0]
+
+    @staticmethod
     def Logarithm(x=np.linspace(0.001, 5, 200)):
-        y = [log(num) for num in x]
+        y = np.array([log(num) for num in x])
         return (x, y)
+
+    @staticmethod
+    def LogarithmAnti(domain=(0.001, 5)):
+        answer = quad(lambda x: log(x), domain[0], domain[1])
+        return answer[0]
 
     @staticmethod
     def Sin(x=np.linspace(-5, 5, 200)):
-        y = [sin(num) for num in x]
+        y = np.array([sin(num) for num in x])
         return (x, y)
+
+    @staticmethod
+    def SinAnti(domain=(-5, 5)):
+        answer = quad(lambda x: sin(x), domain[0], domain[1])
+        return answer[0]
 
     @staticmethod
     def Cos(x=np.linspace(-5, 5, 200)):
-        y = [cos(num) for num in x]
+        y = np.array([cos(num) for num in x])
         return (x, y)
 
     @staticmethod
+    def CosAnti(domain=(-5, 5)):
+        answer = quad(lambda x: cos(x), domain[0], domain[1])
+        return answer[0]
+
+    @staticmethod
     def Tan(x=np.linspace(-5, 5, 200)):
-        y = [tan(num) for num in x]
+        y = np.array([tan(num) for num in x])
         return (x, y)
 
+    @staticmethod
+    def TanAnti(domain=(-5, 5)):
+        answer = quad(lambda x: tan(x), domain[0], domain[1])
+        return answer[0]

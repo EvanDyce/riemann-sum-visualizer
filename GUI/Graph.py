@@ -74,7 +74,7 @@ class Graph(tk.Frame):
     def left_riemann(self, n, function, ax: Axes):
         domain = Functions.get_domain(function)
         step = (domain[1]-domain[0])/n
-        x = np.arange(start=domain[0], stop=domain[1]+step, step=step)
+        x = np.arange(start=domain[0], stop=domain[1]+0.00001, step=step)
         y = self.func_dict[function](x=x)[1]
         x_left = x[:-1]
         y_left = y[:-1]
@@ -89,7 +89,7 @@ class Graph(tk.Frame):
     def right_riemann(self, n, function, ax: Axes):
         domain = Functions.get_domain(function)
         step = (domain[1]-domain[0])/n
-        x = np.arange(start=domain[0], stop=domain[1]+step, step=step)
+        x = np.arange(start=domain[0], stop=domain[1]+0.00001, step=step)
         y = self.func_dict[function](x=x)[1]
         x_right = x[1:]
         y_right = y[1:]
@@ -104,14 +104,24 @@ class Graph(tk.Frame):
     def midpoint_riemann(self, n, function, ax: Axes):
         domain = Functions.get_domain(function)
         step = (domain[1]-domain[0])/n
-        x = np.arange(start=domain[0], stop=domain[1]+step, step=step)
+        x = np.arange(start=domain[0], stop=domain[1]+0.00001, step=step)
         x_mid = (x[1:]+x[:-1])/2
         y_mid = self.func_dict[function](x=x_mid)[1]
+    
 
         ax.bar(x_mid, y_mid, width=(domain[1]-domain[0])/n, alpha=0.2, edgecolor='b')
         
-        dx = (domain[1]-domain[0])/2
+        dx = (domain[1]-domain[0])/n
+   
+        # arr = y_mid * dx
+        # approx_area = sum(arr)
+        # print(sum(arr))
+        # answer = 0
+        # for num in arr:
+        #     answer += num
+        #     print(answer)
         approx_area = np.sum(y_mid*dx)
+
         actual_area = self.antiderivate_function[function](domain=domain)
         return (approx_area, actual_area)
 

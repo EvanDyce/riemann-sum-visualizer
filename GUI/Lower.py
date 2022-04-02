@@ -58,14 +58,14 @@ class Lower(tk.Frame):
         def riemann_changed(self, name, index, mode):
             self.riemann = self.getvar(name)
             approx, actual = self.graph.clear(self.function, self.riemann, self.divisions)
-            self.setvar(name='approx_riemann', value=f'Riemann Sum Area = {approx}')
-            self.setvar(name='actual_riemann', value=f'Actual Area = {actual}')
+            self.setvar(name='approx_riemann', value=f'Riemann Sum Area = {round(approx, 4)}')
+            self.setvar(name='actual_riemann', value=f'Actual Area = {round(actual, 4)}')
 
         def num_divisions_changed(self, name):
             self.divisions = int(self.getvar(name='divisions'))
             approx, actual = self.graph.clear(self.function, self.riemann, self.divisions)
-            self.setvar(name='approx_riemann', value=f'Riemann Sum Area = {approx}')
-            self.setvar(name='actual_riemann', value=f'Actual Area = {actual}')
+            self.setvar(name='approx_riemann', value=f'Riemann Sum Area = {round(approx, 4)}')
+            self.setvar(name='actual_riemann', value=f'Actual Area = {round(actual, 4)}')
 
         def riemann_frame_create(self):
             riemanns = ['Right', 

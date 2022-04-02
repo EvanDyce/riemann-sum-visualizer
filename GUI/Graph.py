@@ -81,7 +81,7 @@ class Graph(tk.Frame):
 
         ax.bar(x_left,y_left,width=(domain[1]-domain[0])/n,alpha=0.2,align='edge',edgecolor='b')
 
-        dx = (domain[1]-domain[0])/2
+        dx = (domain[1]-domain[0])/n
         approx_area = np.sum(y_left*dx)
         actual_area = self.antiderivate_function[function](domain=domain)
         return (approx_area, actual_area)
@@ -112,14 +112,6 @@ class Graph(tk.Frame):
         ax.bar(x_mid, y_mid, width=(domain[1]-domain[0])/n, alpha=0.2, edgecolor='b')
         
         dx = (domain[1]-domain[0])/n
-   
-        # arr = y_mid * dx
-        # approx_area = sum(arr)
-        # print(sum(arr))
-        # answer = 0
-        # for num in arr:
-        #     answer += num
-        #     print(answer)
         approx_area = np.sum(y_mid*dx)
 
         actual_area = self.antiderivate_function[function](domain=domain)

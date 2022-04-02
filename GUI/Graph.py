@@ -73,7 +73,8 @@ class Graph(tk.Frame):
     
     def left_riemann(self, n, function, ax: Axes):
         domain = Functions.get_domain(function)
-        x = np.arange(start=domain[0], stop=domain[1]+1, step=(domain[1]-domain[0])/n)
+        step = (domain[1]-domain[0])/n
+        x = np.arange(start=domain[0], stop=domain[1]+step, step=step)
         y = self.func_dict[function](x=x)[1]
         x_left = x[:-1]
         y_left = y[:-1]
@@ -87,7 +88,8 @@ class Graph(tk.Frame):
 
     def right_riemann(self, n, function, ax: Axes):
         domain = Functions.get_domain(function)
-        x = np.arange(start=domain[0], stop=domain[1]+1, step=(domain[1]-domain[0])/n)
+        step = (domain[1]-domain[0])/n
+        x = np.arange(start=domain[0], stop=domain[1]+step, step=step)
         y = self.func_dict[function](x=x)[1]
         x_right = x[1:]
         y_right = y[1:]
@@ -101,7 +103,8 @@ class Graph(tk.Frame):
 
     def midpoint_riemann(self, n, function, ax: Axes):
         domain = Functions.get_domain(function)
-        x = np.arange(start=domain[0], stop=domain[1]+1, step=(domain[1]-domain[0])/n)
+        step = (domain[1]-domain[0])/n
+        x = np.arange(start=domain[0], stop=domain[1]+step, step=step)
         x_mid = (x[1:]+x[:-1])/2
         y_mid = self.func_dict[function](x=x_mid)[1]
 

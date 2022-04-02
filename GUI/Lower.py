@@ -1,6 +1,7 @@
 from GUI.Graph import Graph
 import globals
 import tkinter as tk
+from functions import Functions
 
 class Lower(tk.Frame):
         def __init__(self, parent, graph: Graph):
@@ -56,11 +57,15 @@ class Lower(tk.Frame):
 
         def riemann_changed(self, name, index, mode):
             self.riemann = self.getvar(name)
-            self.graph.clear(self.function, self.riemann, self.divisions)
+            approx, actual = self.graph.clear(self.function, self.riemann, self.divisions)
+            self.setvar(name='approx_riemann', value=f'Riemann Sum Area = {approx}')
+            self.setvar(name='actual_riemann', value=f'Actual Area = {actual}')
 
         def num_divisions_changed(self, name):
             self.divisions = int(self.getvar(name='divisions'))
-            self.graph.clear(self.function, self.riemann, self.divisions)
+            approx, actual = self.graph.clear(self.function, self.riemann, self.divisions)
+            self.setvar(name='approx_riemann', value=f'Riemann Sum Area = {approx}')
+            self.setvar(name='actual_riemann', value=f'Actual Area = {actual}')
 
         def riemann_frame_create(self):
             riemanns = ['Right', 
@@ -95,14 +100,16 @@ class Lower(tk.Frame):
             result_frame.grid_rowconfigure(1, weight=1)
             result_frame.grid_propagate(False)
 
-            approximate_label = tk.Label(result_frame, text='Riemann Sum Area = 90')
+            approximat_var = tk.StringVar(self, value='Riemann Sum Area = 10', name='approx_riemann')
+            approximate_label = tk.Label(result_frame, textvariable=approximat_var)
             approximate_label.grid(row=0, column=0, sticky='nsew', padx=50, pady=25)
             approximate_label.config(font=('Helvetica bold', 20), foreground=globals.ACCENT_COLOR, background=globals.FRAME_COLOR)
 
-
-            acutal_label = tk.Label(result_frame, text='Actual Area = 104')
-            acutal_label.grid(row=1, column=0, sticky='nsew', padx=50, pady=25)
-            acutal_label.config(font=('Helvetica bold', 20), foreground=globals.ACCENT_COLOR, background=globals.FRAME_COLOR)
+            
+            actual_var = tk.StringVar(self, value='Actual Area = 0', name='actual_riemann')
+            actual_label = tk.Label(result_frame, textvariable=actual_var)
+            actual_label.grid(row=1, column=0, sticky='nsew', padx=50, pady=25)
+            actual_label.config(font=('Helvetica bold', 20), foreground=globals.ACCENT_COLOR, background=globals.FRAME_COLOR)
 
             return result_frame
 

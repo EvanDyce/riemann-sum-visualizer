@@ -49,7 +49,7 @@ class Graph(tk.Frame):
         for item in self.winfo_children():
             item.destroy()
 
-        self.plot(name, riemann, divisions)
+        return self.plot(name, riemann, divisions)
 
 
     def plot(self, function, riemann, divisions):
@@ -59,15 +59,16 @@ class Graph(tk.Frame):
         self.fig = fig
 
         if riemann == 'Left':
-            self.left_riemann(divisions, function, ax)
+            areas = self.left_riemann(divisions, function, ax)
         elif riemann == 'Right':
-            self.right_riemann(divisions, function, ax)
+            areas = self.right_riemann(divisions, function, ax)
         else:
-            self.midpoint_riemann(divisions, function, ax)
+            areas = self.midpoint_riemann(divisions, function, ax)
 
         self.canvas = FigureCanvasTkAgg(fig, master=self)
         self.canvas.draw()
         self.canvas.get_tk_widget().pack(fill=tk.BOTH, expand=tk.YES, padx=50)
+        return areas
 
     
     def left_riemann(self, n, function, ax: Axes):

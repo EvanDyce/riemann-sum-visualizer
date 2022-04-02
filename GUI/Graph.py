@@ -30,6 +30,18 @@ class Graph(tk.Frame):
             'Cos': Functions.Cos,
             'Tan': Functions.Tan
         }
+
+        self.antiderivate_function = {
+            'Linear': Functions.LinearAnti,
+            'Quadratic': Functions.QuadraticAnti,
+            'Cubic': Functions.CubicAnti,
+            'Exponential': Functions.ExponentialAnti,
+            'Logarithmic': Functions.LogarithmAnti,
+            'Sin': Functions.SinAnti,
+            'Cos': Functions.CosAnti,
+            'Tan': Functions.TanAnti
+        }
+
         self.plot('Linear', 'Right', 5)
 
     def clear(self, name, riemann, divisions):
@@ -67,6 +79,11 @@ class Graph(tk.Frame):
 
         ax.bar(x_left,y_left,width=(domain[1]-domain[0])/n,alpha=0.2,align='edge',edgecolor='b')
 
+        dx = (domain[1]-domain[0])/2
+        approx_area = np.sum(y_left*dx)
+        actual_area = self.antiderivate_function[function](domain=domain)
+        return (approx_area, actual_area)
+
     def right_riemann(self, n, function, ax: Axes):
         domain = Functions.get_domain(function)
         x = np.arange(start=domain[0], stop=domain[1]+1, step=(domain[1]-domain[0])/n)
@@ -76,11 +93,21 @@ class Graph(tk.Frame):
 
         ax.bar(x_right, y_right, width=-(domain[1]-domain[0])/n, alpha=0.2, align='edge', edgecolor='b')
 
+        dx = (domain[1]-domain[0])/n
+        approx_area = np.sum(y_right * dx)
+        actual_area = self.antiderivate_function[function](domain=(domain))
+        return (approx_area, actual_area)
+
     def midpoint_riemann(self, n, function, ax: Axes):
         domain = Functions.get_domain(function)
         x = np.arange(start=domain[0], stop=domain[1]+1, step=(domain[1]-domain[0])/n)
         x_mid = (x[1:]+x[:-1])/2
-        print(x_mid)
         y_mid = self.func_dict[function](x=x_mid)[1]
 
         ax.bar(x_mid, y_mid, width=(domain[1]-domain[0])/n, alpha=0.2, edgecolor='b')
+        
+        dx = (domain[1]-domain[0])/2
+        approx_area = np.sum(y_mid*dx)
+        actual_area = self.antiderivate_function[function](domain=domain)
+        return (approx_area, actual_area)
+
